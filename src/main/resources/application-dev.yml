@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/franchise_db_dev
+
+logging:
+  level:
+    co.com.nequi.api.franchise_management_api: DEBUG
+    org.springframework.web: DEBUG

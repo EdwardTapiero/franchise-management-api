@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: ${MONGODB_URI}
+
+logging:
+  level:
+    root: WARN
+    co.com.nequi.api.franchise_management_api: INFO
