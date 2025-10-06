@@ -1,3 +1,4 @@
+#docker
 version: '3.8'
 
 services:
@@ -12,6 +13,35 @@ services:
       - mongodb_data:/data/db
     networks:
       - franchise-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/franchise_db --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  franchise-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: franchise-api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/franchise_db
+      - SPRING_PROFILES_ACTIVE=prod
+      - JAVA_OPTS=-Xmx512m -Xms256m
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - franchise-network
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
 volumes:
   mongodb_data:
