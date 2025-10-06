@@ -38,3 +38,5 @@ logs/
 
 # Application specific
 application-local.yml
+
+terraform/.terraform/
