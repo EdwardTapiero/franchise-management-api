@@ -22,7 +22,6 @@ API Reactiva para gestión de franquicias, sucursales y productos desarrollada c
 - [Testing](#-testing)
 - [Docker](#-docker)
 - [Decisiones de Diseño](#-decisiones-de-diseño)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
 
 ---
 
@@ -371,6 +370,8 @@ DomainException (abstract)
 └── ProductNotFoundException
 
 ## 📁 Estructura del Proyecto
+
+```
 franchise-management-api/
 ├── src/
 │   ├── main/
@@ -416,6 +417,7 @@ franchise-management-api/
 ├── .gitignore
 ├── pom.xml
 └── README.md
+```
 
 ## 🎓 Patrones y Principios Aplicados
 Patrones de Diseño
@@ -493,6 +495,7 @@ Infrastructure as Code para Franchise Management API.
 - MongoDB Atlas account
 
 ### Estructura
+```
 terraform/
 ├── main.tf              # Configuración principal
 ├── variables.tf         # Variables globales
@@ -503,6 +506,7 @@ terraform/
 └── environments/
 ├── dev/            # Environment dev
 └── prod/           # Environment prod
+```
 
 ### Uso
 
