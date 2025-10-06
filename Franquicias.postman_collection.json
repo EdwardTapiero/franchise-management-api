@@ -1,0 +1,340 @@
+{
+	"info": {
+		"_postman_id": "8c26b817-38f5-4f66-922a-8a41cf0990e9",
+		"name": "Franquicias",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10404051",
+		"_collection_link": "https://gold-shuttle-500675.postman.co/workspace/My-Workspace~71a898f2-0adf-4681-8f7e-08fd6f3c839c/collection/10404051-8c26b817-38f5-4f66-922a-8a41cf0990e9?action=share&source=collection_link&creator=10404051"
+	},
+	"item": [
+		{
+			"name": "Create franchises",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"McDonalds\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/franchises",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"franchises"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All franchises",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/franchises",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"franchises"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create branches",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sucursal Centro\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/franchises/fc61fc5b-7fb6-48bf-8d68-edbd06cd71f4/branches",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"franchises",
+						"fc61fc5b-7fb6-48bf-8d68-edbd06cd71f4",
+						"branches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create products",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Big Mac 2\",\n    \"stock\": 150\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/branches/12921d82-0768-47a0-96a8-fff3368c9e1d/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"branches",
+						"12921d82-0768-47a0-96a8-fff3368c9e1d",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update stock product",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"stock\": 75\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/products/7dcb1f4e-3a3d-42b7-abf0-943705828018/stock",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"7dcb1f4e-3a3d-42b7-abf0-943705828018",
+						"stock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update name product",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Big Mac Deluxe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/products/7dcb1f4e-3a3d-42b7-abf0-943705828018/name",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"7dcb1f4e-3a3d-42b7-abf0-943705828018",
+						"name"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/products/7dcb1f4e-3a3d-42b7-abf0-943705828018",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"7dcb1f4e-3a3d-42b7-abf0-943705828018"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get products max stock products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/franchises/fc61fc5b-7fb6-48bf-8d68-edbd06cd71f4/max-stock-products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"franchises",
+						"fc61fc5b-7fb6-48bf-8d68-edbd06cd71f4",
+						"max-stock-products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update name franchise",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"McDonalds Colombia\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/franchises/fc61fc5b-7fb6-48bf-8d68-edbd06cd71f4/name",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"franchises",
+						"fc61fc5b-7fb6-48bf-8d68-edbd06cd71f4",
+						"name"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update name branch",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sucursal Norte\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/branches/12921d82-0768-47a0-96a8-fff3368c9e1d/name",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"branches",
+						"12921d82-0768-47a0-96a8-fff3368c9e1d",
+						"name"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
