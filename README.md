@@ -116,155 +116,82 @@ Adapters      Use Cases    Business Rules
 ```bash
 git clone https://github.com/tu-usuario/franchise-management-api.git
 cd franchise-management-api
-2. Configurar MongoDB
+```
+
+
+### 2. Configurar MongoDB
 Opción A: MongoDB Local
-bash# Iniciar MongoDB (si está instalado localmente)
+```bash
+# Iniciar MongoDB (si está instalado localmente)
 mongod --dbpath /path/to/data/db
+```
+
 Opción B: MongoDB con Docker (Recomendado)
-bashdocker run -d \
+
+```bash
+docker run -d \
   --name franchise-mongodb \
   -p 27017:27017 \
   -v mongodb_data:/data/db \
   mongo:6.0
-3. Configurar variables de entorno (Opcional)
-bash# application.yml usa valores por defecto
-# Para sobreescribir:
+  ```
+
+### 3. Configurar variables de entorno (Opcional)
+application.yml
+```bash
 export MONGODB_URI=mongodb://localhost:27017/franchise_db
 export PORT=8080
+```
 
 ▶️ Ejecución
 Desarrollo Local
-bash# Compilar el proyecto
+```bash
+# Compilar el proyecto
 mvn clean install
+
 
 # Ejecutar la aplicación
 mvn spring-boot:run
-
+```
+```bash
 # O ejecutar el JAR generado
 java -jar target/franchise-management-api-0.0.1-SNAPSHOT.jar
 La API estará disponible en: http://localhost:8080
+```
 Con Docker Compose (Recomendado)
-bash# Construir y ejecutar todos los servicios
+```bash
+# Construir y ejecutar todos los servicios
 docker-compose up --build -d
+```
 
 # Ver logs
+```bash
 docker-compose logs -f franchise-api
+```
 
 # Detener servicios
+```bash
 docker-compose down
+```
 
 # Detener y eliminar volúmenes (limpieza completa)
+```bash
 docker-compose down -v
+```
 Verificar que está funcionando
-bash# Health check
+```bash
+# Health check
 curl http://localhost:8080/actuator/health
 
 # Respuesta esperada:
 # {"status":"UP"}
+```
 
-📚 API Documentation
-Base URL
-http://localhost:8080/api/v1
-Endpoints
-Franquicias
-MétodoEndpointDescripciónPOST/franchisesCrear nueva franquiciaGET/franchisesListar todas las franquiciasGET/franchises/{id}Obtener franquicia por IDPATCH/franchises/{id}/nameActualizar nombre de franquiciaDELETE/franchises/{id}Eliminar franquicia
-Sucursales
-MétodoEndpointDescripciónPOST/franchises/{franchiseId}/branchesAgregar sucursal a franquiciaGET/branches/{id}Obtener sucursal por IDGET/franchises/{franchiseId}/branchesListar sucursales de franquiciaPATCH/branches/{id}/nameActualizar nombre de sucursalDELETE/branches/{id}Eliminar sucursal
-Productos
-MétodoEndpointDescripciónPOST/branches/{branchId}/productsAgregar producto a sucursalGET/products/{id}Obtener producto por IDGET/branches/{branchId}/productsListar productos de sucursalPATCH/products/{id}/stockModificar stock de productoPATCH/products/{id}/nameActualizar nombre de productoDELETE/products/{id}Eliminar producto
-Consultas Especiales
-MétodoEndpointDescripciónGET/franchises/{franchiseId}/max-stock-productsProducto con más stock por sucursal
 
-Ejemplos de Uso
-1. Crear una Franquicia
-Request:
-bashcurl -X POST http://localhost:8080/api/v1/franchises \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "McDonalds"
-  }'
-Response:
-json{
-  "id": "67890abc-def1-2345-6789-0abcdef12345",
-  "name": "McDonalds"
-}
-2. Agregar Sucursal a Franquicia
-Request:
-bashcurl -X POST http://localhost:8080/api/v1/franchises/67890abc-def1-2345-6789-0abcdef12345/branches \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Sucursal Centro"
-  }'
-Response:
-json{
-  "id": "branch-uuid",
-  "name": "Sucursal Centro",
-  "franchiseId": "67890abc-def1-2345-6789-0abcdef12345"
-}
-3. Agregar Producto a Sucursal
-Request:
-bashcurl -X POST http://localhost:8080/api/v1/branches/branch-uuid/products \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Big Mac",
-    "stock": 50
-  }'
-Response:
-json{
-  "id": "product-uuid",
-  "name": "Big Mac",
-  "stock": 50,
-  "branchId": "branch-uuid"
-}
-4. Modificar Stock de Producto
-Request:
-bashcurl -X PATCH http://localhost:8080/api/v1/products/product-uuid/stock \
-  -H "Content-Type: application/json" \
-  -d '{
-    "stock": 75
-  }'
-Response:
-json{
-  "id": "product-uuid",
-  "name": "Big Mac",
-  "stock": 75,
-  "branchId": "branch-uuid"
-}
-5. Obtener Producto con Mayor Stock por Sucursal
-Request:
-bashcurl http://localhost:8080/api/v1/franchises/67890abc-def1-2345-6789-0abcdef12345/max-stock-products
-Response:
-json[
-  {
-    "productId": "product-uuid-1",
-    "productName": "Big Mac",
-    "stock": 100,
-    "branchId": "branch-uuid-1",
-    "branchName": "Sucursal Centro"
-  },
-  {
-    "productId": "product-uuid-2",
-    "productName": "Papas Fritas",
-    "stock": 150,
-    "branchId": "branch-uuid-2",
-    "branchName": "Sucursal Norte"
-  }
-]
-6. Manejo de Errores
-Request (Franquicia no existe):
-bashcurl http://localhost:8080/api/v1/franchises/non-existent-id
-Response (404 Not Found):
-json{
-  "error": "Franchise Not Found",
-  "message": "Franchise with id 'non-existent-id' not found",
-  "status": 404,
-  "timestamp": "2025-10-05T23:30:00.123456",
-  "path": "/api/v1/franchises/non-existent-id"
-}
-
-🧪 Testing
+## 🧪 Testing
 Ejecutar Tests
-bash# Ejecutar todos los tests
+```bash
+# Ejecutar todos los tests
 mvn test
 
 # Ejecutar tests con reporte de cobertura
@@ -274,7 +201,8 @@ mvn clean test jacoco:report
 open target/site/jacoco/index.html  # macOS
 xdg-open target/site/jacoco/index.html  # Linux
 start target/site/jacoco/index.html  # Windows
-Cobertura de Tests
+```
+### Cobertura de Tests
 ┌─────────────────────────────────────────────┐
 │  Code Coverage Report                       │
 ├─────────────────────────────────────────────┤
@@ -284,7 +212,7 @@ Cobertura de Tests
 │  Infrastructure:           81%              │
 │  REST Controllers:         92%              │
 └─────────────────────────────────────────────┘
-Tipos de Tests
+### Tipos de Tests
 
 ✅ Unit Tests: Lógica de negocio (Domain)
 ✅ Service Tests: Casos de uso (Application)
@@ -293,38 +221,39 @@ Tipos de Tests
 ✅ Mapper Tests: Conversiones DTO ↔ Domain ↔ Entity
 
 
-🐳 Docker
-Imágenes
+## 🐳 Docker
+### Imágenes
 
 API: Multi-stage build con Maven y Eclipse Temurin JRE 17
 MongoDB: Imagen oficial mongo:6.0
 
 docker-compose.yml
 yamlservices:
-  mongodb:
-    image: mongo:6.0
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
-    healthcheck:
-      test: mongosh --eval "db.adminCommand('ping')"
-      interval: 10s
-      timeout: 5s
-      retries: 5
+mongodb:
+image: mongo:6.0
+ports:
+- "27017:27017"
+volumes:
+- mongodb_data:/data/db
+healthcheck:
+test: mongosh --eval "db.adminCommand('ping')"
+interval: 10s
+timeout: 5s
+retries: 5
 
-  franchise-api:
-    build: .
-    ports:
-      - "8080:8080"
-    depends_on:
-      mongodb:
-        condition: service_healthy
-    environment:
-      - MONGODB_URI=mongodb://mongodb:27017/franchise_db
-      - SPRING_PROFILES_ACTIVE=prod
+franchise-api:
+build: .
+ports:
+- "8080:8080"
+depends_on:
+mongodb:
+condition: service_healthy
+environment:
+- MONGODB_URI=mongodb://mongodb:27017/franchise_db
+- SPRING_PROFILES_ACTIVE=prod
 Comandos Docker
-bash# Construir imagen
+```bash
+# Construir imagen
 docker build -t franchise-api:latest .
 
 # Ejecutar solo la API (MongoDB aparte)
@@ -338,7 +267,10 @@ docker logs -f franchise-api
 
 # Detener contenedor
 docker stop franchise-api
-Optimizaciones Docker
+```
+
+### Optimizaciones Docker
+
 
 ✅ Multi-stage build (reduce tamaño de imagen)
 ✅ Caché de dependencias Maven
@@ -347,9 +279,9 @@ Optimizaciones Docker
 ✅ Variables de entorno parametrizadas
 
 
-💡 Decisiones de Diseño
+## 💡 Decisiones de Diseño
 1. Arquitectura Hexagonal
-¿Por qué?
+   ¿Por qué?
 
 ✅ Separación clara de responsabilidades
 ✅ Testabilidad (fácil mockear dependencias)
@@ -363,7 +295,7 @@ Application: Casos de uso (orquestación)
 Infrastructure: Detalles técnicos (DB, REST, etc.)
 
 2. Programación Reactiva con WebFlux
-¿Por qué?
+   ¿Por qué?
 
 ✅ No bloqueante (mejor uso de recursos)
 ✅ Escalabilidad horizontal
@@ -379,7 +311,7 @@ zip: Combinación de flujos
 doOnSuccess/doOnError: Logging y side-effects
 
 3. MongoDB con Colecciones Separadas
-¿Por qué no documentos anidados?
+   ¿Por qué no documentos anidados?
 
 ✅ Mejor para demostrar operadores reactivos
 ✅ Actualizaciones más eficientes
@@ -388,10 +320,10 @@ doOnSuccess/doOnError: Logging y side-effects
 
 Modelo:
 franchises → branches → products
-    ↓           ↓          ↓
-   _id      franchiseId  branchId
+↓           ↓          ↓
+_id      franchiseId  branchId
 4. PATCH vs PUT para Actualizaciones
-¿Por qué PATCH?
+   ¿Por qué PATCH?
 
 ✅ Semánticamente correcto para actualizaciones parciales
 ✅ Menos verbose (solo el campo a cambiar)
@@ -399,7 +331,7 @@ franchises → branches → products
 ✅ Endpoints específicos (/products/{id}/stock, /products/{id}/name)
 
 5. Validación con Bean Validation
-¿Por qué?
+   ¿Por qué?
 
 ✅ Validación declarativa
 ✅ Reutilizable
@@ -411,7 +343,7 @@ java@NotBlank(message = "Name is required")
 @Size(min = 2, max = 100)
 private String name;
 6. Logging Estructurado
-Niveles:
+   Niveles:
 
 DEBUG: Detalles técnicos (desarrollo)
 INFO: Operaciones exitosas
@@ -425,7 +357,7 @@ Services: Lógica de negocio
 Adapters: Operaciones de persistencia
 
 7. Manejo de Errores Centralizado
-GlobalExceptionHandler:
+   GlobalExceptionHandler:
 
 ✅ Un solo lugar para manejar errores
 ✅ Respuestas consistentes
@@ -438,7 +370,7 @@ DomainException (abstract)
 ├── BranchNotFoundException
 └── ProductNotFoundException
 
-📁 Estructura del Proyecto
+## 📁 Estructura del Proyecto
 franchise-management-api/
 ├── src/
 │   ├── main/
@@ -485,7 +417,7 @@ franchise-management-api/
 ├── pom.xml
 └── README.md
 
-🎓 Patrones y Principios Aplicados
+## 🎓 Patrones y Principios Aplicados
 Patrones de Diseño
 
 ✅ Repository Pattern: Abstracción de persistencia
@@ -494,7 +426,7 @@ Patrones de Diseño
 ✅ Strategy Pattern: Diferentes implementaciones de puertos
 ✅ Facade Pattern: Simplificación de subsistemas complejos
 
-Principios SOLID
+### Principios SOLID
 
 ✅ Single Responsibility: Cada clase una responsabilidad
 ✅ Open/Closed: Abierto a extensión, cerrado a modificación
@@ -502,7 +434,7 @@ Principios SOLID
 ✅ Interface Segregation: Interfaces específicas
 ✅ Dependency Inversion: Depender de abstracciones
 
-Clean Code
+### Clean Code
 
 ✅ Nombres descriptivos
 ✅ Funciones pequeñas y focalizadas
@@ -511,14 +443,14 @@ Clean Code
 ✅ Tests como documentación
 
 
-🔐 Seguridad
+## 🔐 Seguridad
 
 ✅ Usuario no-root en Docker
 ✅ Validación de entrada en todos los endpoints
 ✅ Sanitización de datos
 ✅ Manejo seguro de excepciones
 
-📈 Performance
+## 📈 Performance
 Optimizaciones Implementadas
 
 ✅ Programación reactiva
@@ -527,44 +459,109 @@ Optimizaciones Implementadas
 ✅ Healthchecks para orquestación
 ✅ Logs asíncronos
 
-Métricas (Actuator)
-bash# Ver métricas
+## Métricas (Actuator)
+```bash
+# Ver métricas
 curl http://localhost:8080/actuator/metrics
 
 # Ver health
 curl http://localhost:8080/actuator/health
+```
 
-🤝 Contribución
+## 🤝 Contribución
 Este es un proyecto de prueba técnica. Para contribuir:
 
-Fork el repositorio
-Crea una rama feature (git checkout -b feature/AmazingFeature)
-Commit tus cambios (git commit -m 'Add some AmazingFeature')
-Push a la rama (git push origin feature/AmazingFeature)
-Abre un Pull Request
+### Fork el repositorio
+- Crea una rama feature (git checkout -b feature/AmazingFeature)
+- Commit tus cambios (git commit -m 'Add some AmazingFeature')
+- Push a la rama (git push origin feature/AmazingFeature)
+- Abre un Pull Request
 
-📖 API Documentation
+## 📖 API Documentation
 
 La documentación interactiva de la API está disponible en:
 http://localhost:8080/swagger-ui/index.html
 
+## Terraform Infrastructure
 
-📝 Licencia
+Infrastructure as Code para Franchise Management API.
+
+### Requisitos
+
+- Terraform >= 1.0
+- AWS CLI configurado
+- MongoDB Atlas account
+
+### Estructura
+terraform/
+├── main.tf              # Configuración principal
+├── variables.tf         # Variables globales
+├── outputs.tf          # Outputs
+├── modules/
+│   ├── mongodb/        # MongoDB Atlas
+│   └── ecs/            # AWS ECS Fargate
+└── environments/
+├── dev/            # Environment dev
+└── prod/           # Environment prod
+
+### Uso
+
+#### 1. Inicializar Terraform
+```bash
+cd terraform
+terraform init
+```
+#### 2. Configurar variables
+```bash
+Crear archivo terraform.tfvars:
+hclaws_region                 = "us-east-1"
+environment                = "dev"
+mongodb_atlas_public_key   = "your-public-key"
+mongodb_atlas_private_key  = "your-private-key"
+mongodb_atlas_project_id   = "your-project-id"
+```
+#### 3. Plan
+```bash
+terraform plan
+```
+#### 4. Apply
+```bash
+terraform apply
+```
+#### 5. Destroy
+```bash
+terraform destroy
+```
+### Recursos Creados
+
+#### VPC con subnets públicas
+- ECS Cluster (Fargate)
+- ECR Repository
+- Application Load Balancer
+- Security Groups
+- IAM Roles
+
+#### MongoDB Atlas
+
+- Cluster M10 (replicaset)
+- Database user
+- IP Access list
+
+
+### Notas de Seguridad
+
+- Las credenciales de MongoDB se almacenan en AWS Secrets Manager
+- Los security groups permiten solo tráfico HTTPS
+- Las subnets privadas no tienen acceso directo a internet
+
+
+## 📝 Licencia
 Este proyecto es una prueba técnica y está disponible para fines educativos.
 
-👤 Autor
+## 👤 Autor
 Edward Tapiero
 
 GitHub: @EdwardTapiero
 LinkedIn: https://www.linkedin.com/in/edward-tapiero-88617019b/
-
-
-🙏 Agradecimientos
-
-Spring Boot Team por el excelente framework
-MongoDB por la base de datos reactiva
-Project Reactor por la programación reactiva
-Clean Architecture principles por Robert C. Martin
-
 
 Desarrollado con ❤️ usando Spring Boot WebFlux y Arquitectura Hexagonal
