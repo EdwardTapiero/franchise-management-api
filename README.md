@@ -543,6 +543,11 @@ Commit tus cambios (git commit -m 'Add some AmazingFeature')
 Push a la rama (git push origin feature/AmazingFeature)
 Abre un Pull Request
 
+📖 API Documentation
+
+La documentación interactiva de la API está disponible en:
+http://localhost:8080/swagger-ui/index.html
+
 
 📝 Licencia
 Este proyecto es una prueba técnica y está disponible para fines educativos.
